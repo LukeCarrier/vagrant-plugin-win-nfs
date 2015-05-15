@@ -17,9 +17,6 @@ module VagrantPlugins
         end
 
         class MountNfsFolder
-            # Maybe in the future...
-            #extend Vagrant::Util::Retryable
-
             def self.mount_nfs_folder(machine, ip, folders)
                 folders.each do |name, opts|
                     # Windows is retarded and only allows us to mount NFS shares
@@ -27,7 +24,7 @@ module VagrantPlugins
                     # This means there's absolutely zero benefit to us
                     # performing path expansion.
 
-                    mount_command = "mount #{ip}:#{hostpath} #{opts[:guestpath]}"
+                    mount_command = "mount #{ip}:#{opts[:hostpath]} #{opts[:guestpath]}"
                     machine.communicate.sudo(mount_command)
                 end
             end
